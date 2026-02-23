@@ -1,0 +1,31 @@
+{
+  "name": "kodbank-app",
+  "version": "1.0.0",
+  "description": "Full-stack banking application with Node.js, Express, MySQL, and JWT authentication",
+  "main": "backend/index.js",
+  "scripts": {
+    "start": "node backend/index.js",
+    "dev": "nodemon backend/index.js"
+  },
+  "keywords": [
+    "banking",
+    "express",
+    "mysql",
+    "jwt",
+    "authentication"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.6",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.6.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "type": "commonjs"
+}

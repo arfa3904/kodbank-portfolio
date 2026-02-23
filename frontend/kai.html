@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAI Assistant - KODBANK</title>
+    <link rel="stylesheet" href="css/kai-page.css">
+</head>
+<body class="kai-page">
+    <aside class="kai-sidebar" id="kai-sidebar">
+        <div class="kai-sidebar-header">
+            <button type="button" class="kai-btn-new" id="kai-btn-new">
+                <span>✏️</span> New chat
+            </button>
+            <div class="kai-search-wrap">
+                <input type="text" class="kai-search" id="kai-search" placeholder="Search chats" />
+            </div>
+        </div>
+        <div class="kai-chats-title">Your chats</div>
+        <div class="kai-chat-list" id="kai-chat-list"></div>
+        <div class="kai-sidebar-footer">
+            <a href="/dashboard.html" class="kai-back-dashboard">← Back to Dashboard</a>
+        </div>
+    </aside>
+
+    <main class="kai-main">
+        <header class="kai-topbar">
+            <h1>KAI Assistant</h1>
+            <span class="kai-topbar-model">KODBANK AI</span>
+        </header>
+
+        <div class="kai-messages-wrap" id="kai-messages-wrap">
+            <div class="kai-greeting" id="kai-greeting">
+                <p class="kai-greeting-text">Ready when you are.</p>
+            </div>
+            <div id="kai-messages"></div>
+        </div>
+        <div class="kai-input-wrap">
+            <form class="kai-input-box" id="kai-form">
+                <button type="button" class="kai-input-btn" id="kai-btn-attach" title="Attach">➕</button>
+                <input type="text" id="kai-input" placeholder="Ask anything" autocomplete="off" />
+                <button type="submit" class="kai-send-btn" id="kai-send">Send</button>
+            </form>
+        </div>
+    </main>
+
+    <script src="js/kai-page.js"></script>
+</body>
+</html>

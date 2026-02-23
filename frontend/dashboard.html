@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - KODBANK</title>
+    <link rel="stylesheet" href="css/bank.css">
+</head>
+<body class="dashboard-page">
+    <a href="/kai.html" class="kai-fab" aria-label="Open KAI Assistant">KAI</a>
+    <header class="dash-header">
+        <div class="dash-header-inner">
+            <div class="brand">
+                <div class="brand-icon">🏦</div>
+                <h1>KODBANK</h1>
+            </div>
+            <div class="user-info">
+                <span class="user-name" id="headerUserName">Account</span>
+                <button type="button" class="btn-logout" onclick="logout()">Sign Out</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="dash-main">
+        <div class="balance-card">
+            <div class="label">Available balance</div>
+            <div class="amount"><span class="currency">₹</span><span id="balanceAmount">0.00</span></div>
+            <div class="account-type">Savings Account</div>
+        </div>
+
+        <div class="actions-grid">
+            <button type="button" class="action-btn primary" onclick="checkBalance()">
+                <div class="icon">💰</div>
+                Check Balance
+            </button>
+            <button type="button" class="action-btn" onclick="document.getElementById('transferSection').scrollIntoView({behavior:'smooth'})">
+                <div class="icon">↔</div>
+                Transfer
+            </button>
+            <button type="button" class="action-btn" onclick="checkBalance()">
+                <div class="icon">📋</div>
+                Statement
+            </button>
+            <button type="button" class="action-btn" onclick="document.getElementById('transferSection').scrollIntoView({behavior:'smooth'})">
+                <div class="icon">💳</div>
+                Pay
+            </button>
+        </div>
+
+        <section class="section-card" id="transferSection">
+            <h2>Transfer Money</h2>
+            <form id="transferForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="receiverId">Receiver Account ID</label>
+                        <input type="number" id="receiverId" name="receiverId" placeholder="e.g. 2" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount (₹)</label>
+                        <input type="number" id="amount" name="amount" placeholder="0.00" min="0.01" step="0.01" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-transfer">Send Money</button>
+            </form>
+        </section>
+
+        <div class="section-card">
+            <h2>Account summary</h2>
+            <div class="account-summary">
+                <div class="chip"><strong>Name</strong> <span id="summaryName">—</span></div>
+                <div class="chip"><strong>Balance</strong> <span id="summaryBalance">₹0.00</span></div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>Recent activity</h2>
+            <ul class="activity-list" id="activityList">
+                <li><span class="muted">Signed in</span><span>—</span></li>
+            </ul>
+        </div>
+
+        <div id="message" class="msg dash-msg"></div>
+    </main>
+
+    <footer class="dash-footer">
+        <div class="secure">🔒 Secure banking</div>
+        <div>KODBANK — Banking simulation app</div>
+    </footer>
+
+    <script>
+        function showMsg(text, type) {
+            const el = document.getElementById('message');
+            el.textContent = text;
+            el.className = 'msg dash-msg show ' + type;
+            setTimeout(() => el.classList.remove('show'), 5000);
+        }
+
+        window.checkBalance = async function() {
+            try {
+                const r = await fetch('/check-balance', { method: 'GET', credentials: 'include' });
+                const data = await r.json();
+                if (data.success) {
+                    const bal = Number(data.balance).toFixed(2);
+                    document.getElementById('balanceAmount').textContent = bal;
+                    document.getElementById('summaryBalance').textContent = '₹' + bal;
+                    document.getElementById('summaryName').textContent = data.customer_name;
+                    document.getElementById('headerUserName').textContent = data.customer_name;
+                    showMsg('Balance updated.', 'success');
+                } else {
+                    if (r.status === 401) {
+                        showMsg('Session expired. Redirecting to sign in...', 'error');
+                        setTimeout(() => { window.location.href = '/login.html'; }, 2000);
+                    } else {
+                        showMsg(data.message || 'Failed to load balance', 'error');
+                    }
+                }
+            } catch (err) {
+                showMsg('Network error. Try again.', 'error');
+            }
+        };
+
+        document.getElementById('transferForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const receiverId = parseInt(document.getElementById('receiverId').value, 10);
+            const amount = parseFloat(document.getElementById('amount').value);
+            if (!receiverId || !amount || amount <= 0) {
+                showMsg('Enter valid receiver ID and amount.', 'error');
+                return;
+            }
+            try {
+                const r = await fetch('/transfer', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ receiver_id: receiverId, amount })
+                });
+                const data = await r.json();
+                if (data.success) {
+                    const newBal = Number(data.new_balance).toFixed(2);
+                    document.getElementById('balanceAmount').textContent = newBal;
+                    document.getElementById('summaryBalance').textContent = '₹' + newBal;
+                    document.getElementById('transferForm').reset();
+                    var list = document.getElementById('activityList');
+                    var li = document.createElement('li');
+                    li.innerHTML = '<span class="muted">Transfer to ' + data.receiver_name + '</span><span class="debit">- ₹' + data.transfer_amount + '</span>';
+                    list.insertBefore(li, list.firstChild);
+                    showMsg('₹' + data.transfer_amount + ' sent to ' + data.receiver_name + '. New balance: ₹' + newBal, 'success');
+                } else {
+                    if (r.status === 401) {
+                        showMsg('Session expired. Please sign in again.', 'error');
+                        setTimeout(() => { window.location.href = '/login.html'; }, 2000);
+                    } else {
+                        showMsg(data.message || 'Transfer failed', 'error');
+                    }
+                }
+            } catch (err) {
+                showMsg('Network error. Try again.', 'error');
+            }
+        });
+
+        window.logout = function() {
+            document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            window.location.href = '/login.html';
+        };
+
+        window.addEventListener('load', checkBalance);
+    </script>
+</body>
+</html>
