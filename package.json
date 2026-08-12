@@ -5,22 +5,30 @@
   "main": "backend/index.js",
   "scripts": {
     "start": "node backend/index.js",
-    "dev": "nodemon backend/index.js"
+    "dev": "nodemon backend/index.js",
+    "client:dev": "npm run dev --prefix client-react",
+    "client:build": "npm run build --prefix client-react",
+    "build": "npm run client:build",
+    "seed": "node scripts/seed-file-db.js"
   },
   "keywords": [
     "banking",
     "express",
     "mysql",
     "jwt",
-    "authentication"
+    "authentication",
+    "fintech",
+    "react"
   ],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.6",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "express-rate-limit": "^7.4.1",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.6.5"
   },

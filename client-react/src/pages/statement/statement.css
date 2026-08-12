@@ -1,0 +1,133 @@
+.filter-bar {
+  display: flex;
+  gap: 14px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  padding: 18px 20px;
+}
+.filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.filter-field label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.filter-field input,
+.filter-field select {
+  padding: 9px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  background: var(--white);
+  color: var(--text-primary);
+}
+.filter-field input:focus,
+.filter-field select:focus {
+  outline: none;
+  border-color: var(--cerulean);
+  box-shadow: 0 0 0 3px var(--cerulean-soft);
+}
+.filter-search {
+  flex: 1;
+  min-width: 180px;
+}
+.filter-search input {
+  width: 100%;
+}
+.filter-clear {
+  padding: 9px 16px;
+  border: 1px solid var(--border-strong);
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  height: fit-content;
+}
+.filter-clear:hover {
+  background: var(--bg-subtle);
+}
+
+.statement-totals {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0 4px;
+}
+
+/* ---- Table ---- */
+.table-card {
+  overflow: hidden;
+}
+.table-scroll {
+  overflow-x: auto;
+}
+.txn-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.txn-table thead th {
+  text-align: left;
+  padding: 14px 18px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.txn-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.txn-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.txn-table tbody tr:hover {
+  background: var(--bg-subtle);
+}
+.txn-table .num {
+  text-align: right;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.txn-table .num.credit {
+  color: var(--success);
+}
+.txn-table .num.debit {
+  color: var(--text-primary);
+}
+.table-state {
+  text-align: center;
+  padding: 36px 0;
+  color: var(--text-muted);
+}
+.pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.pill--credit {
+  background: var(--success-bg);
+  color: var(--success);
+}
+.pill--debit {
+  background: var(--cerulean-soft);
+  color: var(--navy);
+}
+
+@media (max-width: 680px) {
+  .filter-search {
+    flex-basis: 100%;
+  }
+}

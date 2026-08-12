@@ -1,0 +1,31 @@
+{
+  "meta": { "nextCid": 4, "nextTokenId": 1, "nextTxnId": 1 },
+  "BankUser": [
+    {
+      "Cid": 1,
+      "Cname": "Omkar",
+      "Cpwd": "$2a$10$UgF03OwYcZSNfPBNJDjLxOyTPV.2DONekEL8pmtmIUOc2dSdLXrlq",
+      "balance": 500000,
+      "email": "omkar@kodbank.dev",
+      "created_at": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "Cid": 2,
+      "Cname": "Abhaya",
+      "Cpwd": "$2a$10$WzZc1mu82w.CUZjsIcGge.4Mk1W6wRpsizktrJqpD3.RG5LE86gBu",
+      "balance": 600000,
+      "email": "abhaya@kodbank.dev",
+      "created_at": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "Cid": 3,
+      "Cname": "Demo User",
+      "Cpwd": "$2a$10$O8ZfgXVmLhQF5g6SkbEaQ.BYjAwk6Q3OObqMV31zs8aM1l8rBbl.W",
+      "balance": 500000,
+      "email": "demo@kodbank.dev",
+      "created_at": "2026-01-01T00:00:00.000Z"
+    }
+  ],
+  "BankUserJwt": [],
+  "BankTransferLog": []
+}

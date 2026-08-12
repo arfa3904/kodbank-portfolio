@@ -1,0 +1,118 @@
+.transfer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.transfer-form-card {
+  padding: 22px;
+}
+.transfer-balance-pill {
+  display: inline-block;
+  background: var(--cerulean-soft);
+  color: var(--navy);
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.82rem;
+  margin-bottom: 18px;
+}
+.transfer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.transfer-chips-card {
+  padding: 22px;
+}
+
+/* ---- Chips ---- */
+.chips {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  text-align: left;
+  transition: border-color var(--transition), background var(--transition),
+    transform var(--transition);
+}
+.chip:hover {
+  border-color: var(--cerulean-light);
+  transform: translateY(-1px);
+}
+.chip.is-selected {
+  border-color: var(--cerulean);
+  background: var(--cerulean-soft);
+}
+.chip-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--gradient-brand);
+  color: var(--white);
+  display: grid;
+  place-items: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.chip-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.chip-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.chip-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.chips-empty {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  padding: 12px 0;
+}
+
+/* ---- Confirm modal body ---- */
+.confirm-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.confirm-amount {
+  font-size: 2rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+}
+.confirm-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.confirm-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+@media (max-width: 820px) {
+  .transfer-grid {
+    grid-template-columns: 1fr;
+  }
+}

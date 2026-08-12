@@ -1,0 +1,45 @@
+/* KODBANK design tokens. Palette: Neon Navy + Vivid Cerulean. */
+:root {
+  --navy: #292075;
+  --navy-dark: #1a1647;
+  --navy-soft: #3d3480;
+  --cerulean: #00b5ef;
+  --cerulean-light: #4fc3f7;
+  --cerulean-soft: rgba(0, 181, 239, 0.12);
+
+  --white: #ffffff;
+  --bg-page: #f5f7fa;
+  --bg-card: #ffffff;
+  --bg-subtle: #f1f4f9;
+
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
+
+  --success: #2e7d32;
+  --success-bg: #e8f5e9;
+  --error: #c62828;
+  --error-bg: #ffebee;
+  --warning: #b26a00;
+
+  --border: #e2e8f0;
+  --border-strong: #cbd5e0;
+
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 3px rgba(41, 32, 117, 0.08);
+  --shadow: 0 4px 12px rgba(41, 32, 117, 0.1);
+  --shadow-lg: 0 10px 40px rgba(41, 32, 117, 0.12);
+
+  --gradient-brand: linear-gradient(135deg, var(--navy) 0%, var(--cerulean) 130%);
+  --gradient-card: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 60%, #4035a0 100%);
+
+  --transition: 180ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  --shell-sidebar-w: 248px;
+  --shell-topbar-h: 64px;
+  --shell-bottomnav-h: 64px;
+}

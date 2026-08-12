@@ -1,5 +1,5 @@
 /**
- * Run database.sql on Aiven MySQL.
+ * Run database/database.sql on Aiven MySQL.
  * Uses backend/.env for connection. Run from project root: node scripts/run-schema.js
  */
 const mysql = require('mysql2/promise');
@@ -23,7 +23,7 @@ if (process.env.DB_SSL === 'true') {
 }
 
 async function run() {
-    const sqlPath = path.join(__dirname, '../database.sql');
+    const sqlPath = path.join(__dirname, '../database/database.sql');
     const sql = fs.readFileSync(sqlPath, 'utf8');
 
     console.log('Connecting to Aiven MySQL...');
@@ -37,7 +37,7 @@ async function run() {
         console.log('✅ Connected to MySQL server');
         
         await conn.query(sql);
-        console.log('✅ Database "bank_user" and tables BankUser, BankUserJwt created (sample data inserted).');
+        console.log('✅ Database "bank_user" and tables BankUser, BankUserJwt, BankTransferLog created (sample data inserted).');
     } catch (err) {
         console.error('\n❌ Schema run failed:', err.message);
         console.error(`Error code: ${err.code}`);

@@ -1,0 +1,186 @@
+/* ---- Balance hero ---- */
+.balance-hero {
+  position: relative;
+  background: var(--gradient-card);
+  color: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 26px 28px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.balance-hero-glow {
+  position: absolute;
+  top: -60%;
+  right: -10%;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(0, 181, 239, 0.4), transparent 70%);
+  pointer-events: none;
+}
+.balance-hero-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+.balance-hero-label {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+.balance-hero-acct {
+  font-size: 0.78rem;
+  opacity: 0.7;
+  letter-spacing: 0.04em;
+}
+.balance-hero-amount {
+  font-size: 2.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 10px 0 20px;
+  position: relative;
+}
+.balance-hero-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  position: relative;
+}
+.balance-hero-btn {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  padding: 9px 16px;
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background var(--transition), transform var(--transition);
+}
+.balance-hero-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+.balance-hero-btn.primary {
+  background: var(--white);
+  color: var(--navy);
+  border-color: transparent;
+}
+
+/* ---- Stat grid ---- */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* ---- Dashboard lower grid ---- */
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.chart-card,
+.recent {
+  padding: 20px 22px;
+}
+.chart-wrap {
+  position: relative;
+}
+.chart-empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  z-index: 2;
+  text-align: center;
+  padding: 0 20px;
+}
+
+/* ---- Recent transactions ---- */
+.recent-link {
+  font-size: 0.82rem;
+  color: var(--cerulean);
+  font-weight: 600;
+}
+.recent-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+.recent-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.recent-item:last-child {
+  border-bottom: none;
+}
+.recent-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.recent-avatar.credit {
+  background: var(--success-bg);
+  color: var(--success);
+}
+.recent-avatar.debit {
+  background: var(--cerulean-soft);
+  color: var(--navy);
+}
+.recent-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+.recent-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.recent-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.recent-amount {
+  font-weight: 700;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+.recent-amount.credit {
+  color: var(--success);
+}
+.recent-amount.debit {
+  color: var(--text-primary);
+}
+.recent-empty {
+  padding: 24px 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+
+@media (max-width: 980px) {
+  .dash-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 680px) {
+  .stat-grid {
+    grid-template-columns: 1fr;
+  }
+  .balance-hero-amount {
+    font-size: 2.1rem;
+  }
+}

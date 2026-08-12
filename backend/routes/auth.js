@@ -1,77 +1,47 @@
-// Auth routes: registration and login. On login, generate JWT, store in BankUserJwt, set cookie.
+// Auth routes: POST /api/auth/register, /login, /logout, GET /api/auth/me
 
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const { query } = require('../db');
+const authService = require('../services/authService');
+const verifyToken = require('../middleware/verifyToken');
+const config = require('../config');
+const { asyncHandler } = require('../middleware/errorHandler');
 const router = express.Router();
 
-// POST /register - create new bank user (Cname, Cpwd, email; balance default 0)
-router.post('/register', async (req, res) => {
-    try {
-        const { Cname, Cpwd, email } = req.body;
-        if (!Cname || !Cpwd || !email) {
-            return res.status(400).json({ success: false, message: 'Name, password and email are required.' });
+router.post('/register', asyncHandler(async (req, res) => {
+    const { Cname, Cpwd, email } = req.body;
+    await authService.register({ Cname, Cpwd, email });
+    res.status(201).json({ success: true, message: 'Registration successful. You can log in now.' });
+}));
+
+router.post('/login', asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+    const { token, Cname } = await authService.login({ email, password });
+
+    res.cookie('token', token, config.cookieOptions);
+    res.json({ success: true, message: 'Login successful.', Cname });
+}));
+
+router.post('/logout', asyncHandler(async (req, res) => {
+    const token = req.cookies.token;
+    if (token) {
+        // Best-effort: even an already-expired/tampered token should still
+        // result in the cookie being cleared client-side, so don't reject
+        // the request if decoding fails — just skip the DB-side revocation.
+        try {
+            const decoded = jwt.verify(token, config.jwtSecret);
+            await authService.logout({ token, Cid: decoded.Cid });
+        } catch {
+            /* token already invalid/expired: nothing to revoke */
         }
-        await query(
-            'INSERT INTO BankUser (Cname, Cpwd, balance, email) VALUES (?, ?, 0, ?)',
-            [Cname.trim(), Cpwd, email.trim()]
-        );
-        res.status(201).json({ success: true, message: 'Registration successful. You can login now.' });
-    } catch (err) {
-        if (err.code === 'ER_DUP_ENTRY') {
-            return res.status(400).json({ success: false, message: 'Email already registered.' });
-        }
-        console.error('Register error:', err.message);
-        res.status(500).json({ success: false, message: 'Registration failed.' });
     }
-});
+    res.clearCookie('token', { httpOnly: true, sameSite: 'lax', secure: config.isProduction });
+    res.json({ success: true, message: 'Logged out.' });
+}));
 
-// POST /login - validate email + password, generate JWT, store in BankUserJwt, set cookie
-router.post('/login', async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        if (!email || !password) {
-            return res.status(400).json({ success: false, message: 'Email and password are required.' });
-        }
-
-        const users = await query(
-            'SELECT Cid, Cname, Cpwd, email FROM BankUser WHERE email = ?',
-            [email.trim()]
-        );
-        if (users.length === 0) {
-            return res.status(401).json({ success: false, message: 'Invalid email or password.' });
-        }
-
-        const user = users[0];
-        if (user.Cpwd !== password) {
-            return res.status(401).json({ success: false, message: 'Invalid email or password.' });
-        }
-
-        const token = jwt.sign(
-            { Cid: user.Cid, email: user.email },
-            process.env.JWT_SECRET,
-            { expiresIn: '1h' }
-        );
-        const exp = new Date();
-        exp.setHours(exp.getHours() + 1);
-
-        await query(
-            'INSERT INTO BankUserJwt (tokenvalue, Cid, exp) VALUES (?, ?, ?)',
-            [token, user.Cid, exp]
-        );
-
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
-            maxAge: 3600000
-        });
-
-        res.json({ success: true, message: 'Login successful', Cname: user.Cname });
-    } catch (err) {
-        console.error('Login error:', err.message);
-        res.status(500).json({ success: false, message: 'Login failed.' });
-    }
-});
+router.get('/me', verifyToken, asyncHandler(async (req, res) => {
+    const profile = await authService.getProfile(req.Cid);
+    res.json({ success: true, user: profile });
+}));
 
 module.exports = router;

@@ -4,7 +4,11 @@ node_modules/
 # Environment variables (never commit secrets)
 .env
 backend/.env
-server/.env
+*.env
+!*.env.example
+
+# Local file-DB fallback (runtime data, regenerated from backend/data/seed.json)
+backend/data/db.json
 
 # Logs
 *.log
@@ -21,5 +25,6 @@ Thumbs.db
 *.swo
 
 # Build files
-dist/
+client-react/dist/
 build/
+*.tsbuildinfo
