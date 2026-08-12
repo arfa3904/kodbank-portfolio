@@ -414,8 +414,7 @@ verified, but not a real HF response).
 
 ## Screenshots
 
-_Add screenshots of the login page, dashboard, transfer flow, and KAI
-assistant here before publishing._<img width="1600" height="760" alt="4de1152a-e28a-463a-8985-9c668387477d" src="https://github.com/user-attachments/assets/2a813aac-906a-47b1-880a-d2beee2cf5d2" />
+._<img width="1600" height="760" alt="4de1152a-e28a-463a-8985-9c668387477d" src="https://github.com/user-attachments/assets/2a813aac-906a-47b1-880a-d2beee2cf5d2" />
 
 
 ## Known limitations & future enhancements
